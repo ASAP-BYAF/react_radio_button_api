@@ -21,6 +21,13 @@ async def get_tasks_all(db: AsyncSession) -> list[tuple[int, str, bool]]:
     )
     return result.all()
 
+async def get_task_by_title(db: AsyncSession, task_base: task_schema.TaskBase) -> tuple[int, str, bool]:
+    print(task_base.title)
+    result: Result = await db.execute(
+        select(task_model.Task).filter(task_model.Task.title == task_base.title)
+    )
+    return result.scalars().first()
+
 async def get_task(db: AsyncSession, task_id: int) -> task_model.Task | None:
     result: Result = await db.execute(
         select(task_model.Task).filter(task_model.Task.id == task_id)

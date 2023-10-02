@@ -12,6 +12,10 @@ router = APIRouter()
 async def list_tasks(db: AsyncSession = Depends(get_db)):
     return await task_crud.get_tasks_all(db)
 
+@router.post("/task_by_title", response_model=task_schema.Task)
+async def get_tasks_by_title(task_body: task_schema.TaskBase, db: AsyncSession = Depends(get_db)):
+    return await task_crud.get_task_by_title(db, task_body)
+
 @router.post("/tasks", response_model=task_schema.TaskCreateResponse)
 async def create_task(task_body: task_schema.TaskCreate, db: AsyncSession = Depends(get_db)):
     return await task_crud.create_task(db, task_body)
