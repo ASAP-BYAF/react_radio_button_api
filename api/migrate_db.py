@@ -1,6 +1,8 @@
 from sqlalchemy import create_engine
 
 from api.models.task import Base
+from api.models.file import Base
+from api.models.appering import Base
 
 #(Rf): https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.asyncpg
 #URL: "mysql+aiomysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/demo?charset=utf8"
