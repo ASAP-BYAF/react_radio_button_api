@@ -25,10 +25,30 @@ async def create_file(db: AsyncSession, file_create: file_schema.FileCreate) -> 
 
 
 async def get_file_by_name(db: AsyncSession,
-                           file_search: file_schema.FileSerachByName)\
-                             -> tuple[int, str, bool]:
-    print(file_search.file_name)
+                           file_name: str)\
+                             -> tuple[int, str]:
+    print(file_name)
     result: Result = await db.execute(
-        select(file_model.File).filter(file_model.File.file_name == file_search.file_name)
+        select(file_model.File).filter(file_model.File.file_name == file_name)
     )
     return result.scalars().first()
+
+
+async def get_file_by_id(db: AsyncSession,
+                         file_id: int)\
+                             -> tuple[int, str]:
+    print(file_id)
+    result: Result = await db.execute(
+        select(file_model.File).filter(file_model.File.id == file_id)
+    )
+    return result.scalars().first()
+
+
+async def update_file(
+    db: AsyncSession, file_create: file_schema.FileCreate, original: file_model.File
+) -> file_model.File:
+    original.file_name = file_create.file_name
+    db.add(original)
+    await db.commit()
+    await db.refresh(original)
+    return original
