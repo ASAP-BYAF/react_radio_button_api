@@ -5,7 +5,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 import api.models.file as file_model
 import api.schemas.file as file_schema
 
-async def get_file_by_vol_file(db: AsyncSession, file_base: file_schema.FileBase) -> file_model.File:
+
+async def get_name_by_vol_file_num(db: AsyncSession,
+                               file_base: file_schema.FileBase) -> file_model.File:
     result: Result = await db.execute(
         select(file_model.File)
         .filter(file_model.File.vol_num == file_base.vol_num)
@@ -13,9 +15,20 @@ async def get_file_by_vol_file(db: AsyncSession, file_base: file_schema.FileBase
     )
     return result.scalars().first()
 
+
 async def create_file(db: AsyncSession, file_create: file_schema.FileCreate) -> file_model.File:
     file = file_model.File(**file_create.dict())
     db.add(file)
     await db.commit()
     await db.refresh(file)
     return file
+
+
+async def get_file_by_name(db: AsyncSession,
+                           file_search: file_schema.FileSerachByName)\
+                             -> tuple[int, str, bool]:
+    print(file_search.file_name)
+    result: Result = await db.execute(
+        select(file_model.File).filter(file_model.File.file_name == file_search.file_name)
+    )
+    return result.scalars().first()
