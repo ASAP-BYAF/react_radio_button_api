@@ -50,3 +50,10 @@ async def get_appearing_detail_by_name(db: AsyncSession,
 async def delete_appearing_detail(db: AsyncSession, original: appearing_model.AppearingDetail) -> None:
     await db.delete(original)
     await db.commit()
+
+
+async def get_appearing_detail_id_min(db: AsyncSession) -> appearing_model.AppearingDetail:
+    result: Result = await db.execute(
+        select(appearing_model.AppearingDetail).order_by(appearing_model.AppearingDetail.id)
+    )
+    return result.scalars().first()
