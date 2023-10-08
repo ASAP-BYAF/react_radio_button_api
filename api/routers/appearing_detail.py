@@ -7,7 +7,7 @@ from api.db import get_db
 
 router = APIRouter()
 
-# @router.post("/file_title_by_vol_file", response_model=file_schema.FileCreateResponse)
+# @router.post("/appearing_detail_title_by_vol_file", response_model=file_schema.FileCreateResponse)
 # async def get_file_by_title(file_body: file_schema.FileBase, db: AsyncSession = Depends(get_db)):
 #     print(file_body.vol_num)
 #     print(file_body.file_num)
@@ -27,3 +27,8 @@ async def list_appearing(db: AsyncSession = Depends(get_db)):
 async def create_appearing(appearing_detail_body: appearing_detail_schema.AppearingDetailCreate,
                            db: AsyncSession = Depends(get_db)):
     return await appearing_detail_crud.create_appearing_detail(db, appearing_detail_body)
+
+
+@router.post("/appearing_detail_by_name", response_model=appearing_detail_schema.AppearingDetailCreateResponse)
+async def get_appearing_detail_by_name(appearing_detail_body: appearing_detail_schema.AppearingDetailBase, db: AsyncSession = Depends(get_db)):
+    return await appearing_detail_crud.get_appearing_detail_by_name(db, appearing_detail_body.appearing_detail)

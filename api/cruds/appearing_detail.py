@@ -35,3 +35,14 @@ async def create_appearing_detail(db: AsyncSession,
     await db.commit()
     await db.refresh(appearing_detail)
     return appearing_detail
+
+
+async def get_appearing_detail_by_name(db: AsyncSession,
+                                appearing_detail_name: str)\
+                             -> tuple[int, str]:
+    print(appearing_detail_name)
+    result: Result = await db.execute(
+        select(appearing_model.AppearingDetail).filter(appearing_model.AppearingDetail.appearing_detail == appearing_detail_name)
+    )
+    return result.scalars().first()
+
