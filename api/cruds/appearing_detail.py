@@ -46,3 +46,7 @@ async def get_appearing_detail_by_name(db: AsyncSession,
     )
     return result.scalars().first()
 
+
+async def delete_appearing_detail(db: AsyncSession, original: appearing_model.AppearingDetail) -> None:
+    await db.delete(original)
+    await db.commit()

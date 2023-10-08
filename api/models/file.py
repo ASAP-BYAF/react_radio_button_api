@@ -11,6 +11,3 @@ class File(Base):
     vol_num = Column(Integer, nullable=False)
     file_num = Column(Integer, nullable=False)
     file_name = Column(String, nullable=False, unique=True)
-
-    # projects = relationship("Task",
-    #                         back_populates="tasks")
