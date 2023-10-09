@@ -40,3 +40,14 @@ async def update_appearing(
     await db.commit()
     await db.refresh(original)
     return original
+
+
+async def get_appearing_with_file_id(db: AsyncSession, file_id: int) -> list[tuple[int, str]]:
+    result: Result = await db.execute(
+        select(
+            appearing_model.Appearing.file_id,
+            appearing_model.Appearing.task_id,
+            appearing_model.Appearing.appearing_detail_id,
+        ).filter(appearing_model.Appearing.file_id == file_id)
+    )
+    return result.all()

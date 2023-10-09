@@ -33,3 +33,8 @@ async def update_appearing(appearing_body: appearing_schema.AppearingBase, db: A
     if appearing is None:
         raise HTTPException(status_code=404, detail="Task not found")
     return await appearing_crud.update_appearing(db, appearing_body, original=appearing)
+
+
+@router.get("/appearing_with_file_id/{file_id}", response_model=list[appearing_schema.AppearingBase])
+async def list_tasks(file_id: int, db: AsyncSession = Depends(get_db)):
+    return await appearing_crud.get_appearing_with_file_id(db, file_id)
