@@ -46,3 +46,19 @@ async def delete_appearing_detail(appearing_detail_body: appearing_detail_schema
             response_model=appearing_detail_schema.AppearingDetailCreateResponse)
 async def get_appearing_detail_id_min(db: AsyncSession = Depends(get_db)):
     return await appearing_detail_crud.get_appearing_detail_id_min(db)
+
+
+@router.put("/update_appearing_detail/{appearing_detail_id}", response_model=appearing_detail_schema.AppearingDetailCreateResponse)
+async def update_appearing_detail(
+        appearing_detail_id: int,
+        appearing_detail_body: appearing_detail_schema.AppearingDetailBase,
+        db: AsyncSession = Depends(get_db)
+    ):
+    appearing_detail = await appearing_detail_crud \
+        .get_appearing_detail_by_id(
+            db,
+            appearing_detail_id=appearing_detail_id
+        )
+    if appearing_detail is None:
+        raise HTTPException(status_code=404, detail="appearing_detail not found")
+    return await appearing_detail_crud.update_appearing_detail(db, appearing_detail_body, original=appearing_detail)

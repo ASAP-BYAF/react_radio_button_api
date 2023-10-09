@@ -38,11 +38,22 @@ async def create_appearing_detail(db: AsyncSession,
 
 
 async def get_appearing_detail_by_name(db: AsyncSession,
-                                appearing_detail_name: str)\
-                             -> tuple[int, str]:
+                                       appearing_detail_name: str)\
+                                       -> tuple[int, str]:
     print(appearing_detail_name)
     result: Result = await db.execute(
-        select(appearing_model.AppearingDetail).filter(appearing_model.AppearingDetail.appearing_detail == appearing_detail_name)
+        select(appearing_model.AppearingDetail)
+        .filter(appearing_model.AppearingDetail.appearing_detail == appearing_detail_name)
+    )
+    return result.scalars().first()
+
+
+async def get_appearing_detail_by_id(db: AsyncSession,
+                                     appearing_detail_id: int)\
+                                     -> tuple[int, str]:
+    result: Result = await db.execute(
+        select(appearing_model.AppearingDetail)
+        .filter(appearing_model.AppearingDetail.id == appearing_detail_id)
     )
     return result.scalars().first()
 
@@ -57,3 +68,15 @@ async def get_appearing_detail_id_min(db: AsyncSession) -> appearing_model.Appea
         select(appearing_model.AppearingDetail).order_by(appearing_model.AppearingDetail.id)
     )
     return result.scalars().first()
+
+
+async def update_appearing_detail(
+    db: AsyncSession,
+    appearing_detail_create: appearing_detail_schema.AppearingDetailCreate,
+    original: appearing_model.AppearingDetail
+) -> appearing_model.AppearingDetail:
+    original.appearing_detail = appearing_detail_create.appearing_detail
+    db.add(original)
+    await db.commit()
+    await db.refresh(original)
+    return original
