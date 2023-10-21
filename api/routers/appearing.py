@@ -31,10 +31,20 @@ async def update_appearing(appearing_body: appearing_schema.AppearingBase, db: A
     task_id = appearing_body.task_id
     appearing = await appearing_crud.get_appearing(db, file_id=file_id, task_id=task_id)
     if appearing is None:
-        raise HTTPException(status_code=404, detail="Task not found")
+        raise HTTPException(status_code=404, detail="Appearing not found")
     return await appearing_crud.update_appearing(db, appearing_body, original=appearing)
 
 
 @router.get("/appearing_with_file_id/{file_id}", response_model=list[appearing_schema.AppearingBase])
-async def list_tasks(file_id: int, db: AsyncSession = Depends(get_db)):
+async def list_appearings(file_id: int, db: AsyncSession = Depends(get_db)):
     return await appearing_crud.get_appearing_with_file_id(db, file_id)
+
+
+@router.delete("/appearing_delete/", response_model=None)
+async def delete_appearing(appearing_body: appearing_schema.AppearingDelete, db: AsyncSession = Depends(get_db)):
+    file_id = appearing_body.file_id
+    task_id = appearing_body.task_id
+    appearing = await appearing_crud.get_appearing(db, file_id=file_id, task_id=task_id)
+    if appearing is None:
+        raise HTTPException(status_code=404, detail="Appearing not found")
+    return await appearing_crud.delete_appearing(db, original=appearing)

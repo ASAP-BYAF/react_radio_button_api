@@ -51,3 +51,8 @@ async def get_appearing_with_file_id(db: AsyncSession, file_id: int) -> list[tup
         ).filter(appearing_model.Appearing.file_id == file_id)
     )
     return result.all()
+
+
+async def delete_appearing(db: AsyncSession, original: appearing_model.Appearing) -> None:
+    await db.delete(original)
+    await db.commit()

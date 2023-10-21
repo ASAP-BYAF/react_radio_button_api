@@ -34,7 +34,7 @@ async def get_appearing_detail_by_name(appearing_detail_body: appearing_detail_s
     return await appearing_detail_crud.get_appearing_detail_by_name(db, appearing_detail_body.appearing_detail)
 
 
-@router.delete("/appearing_delete", response_model=None)
+@router.delete("/appearing_detail_delete", response_model=None)
 async def delete_appearing_detail(appearing_detail_body: appearing_detail_schema.AppearingDetailBase, db: AsyncSession = Depends(get_db)):
     appearing_detail = await appearing_detail_crud.get_appearing_detail_by_name(db, appearing_detail_body.appearing_detail)
     if appearing_detail is None:

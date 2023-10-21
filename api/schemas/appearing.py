@@ -7,6 +7,11 @@ class AppearingBase(BaseModel):
     appearing_detail_id: int
 
 
+class AppearingDelete(BaseModel):
+    file_id: int
+    task_id: int
+
+
 class AppearingCreate(AppearingBase):
     pass
 
