@@ -9,3 +9,7 @@ class SearchBase(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class SearchByTask(BaseModel):
+    TaskList: list[str]
