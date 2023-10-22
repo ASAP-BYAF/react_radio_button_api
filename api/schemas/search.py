@@ -1,10 +1,11 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 
 
 class SearchBase(BaseModel):
-    file_id: int
-    task_id: int
-    appearing_detail_id: int
+    vol_num: int
+    file_num: int
+    title: str
+    appearing_detail: str
 
     class Config:
         orm_mode = True
