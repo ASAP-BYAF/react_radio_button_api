@@ -12,4 +12,4 @@ class SearchBase(BaseModel):
 
 
 class SearchByTask(BaseModel):
-    TaskList: list[str]
+    task_list: list[str]
