@@ -12,6 +12,7 @@ async def get_all(db: AsyncSession) -> list[tuple[int, str, bool]]:
         select(
             File.vol_num,
             File.file_num,
+            File.file_name,
             Task.title,
             AppearingDetail.appearing_detail
         )
