@@ -2,12 +2,15 @@ import os
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-# DB_USER = os.environ.get("DB_USER", "root")
-# DB_PASSWORD = os.environ.get("DB_PASSWORD", "")
-# DB_HOST = os.environ.get("DB_HOST", "db")
-# DB_PORT = os.environ.get("DB_PORT", "3306")
+from dotenv import load_dotenv
+# 環境変数を .env から読み込む。
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
+DB_USER = os.environ.get("DB_USER", "root")
+DB_PASS = os.environ.get("DB_PASS", "")
 ASYNC_DB_URL = (
-f"postgresql+asyncpg://postgres:Teppei4869@localhost:5432/test_api_db"
+f"postgresql+asyncpg://{DB_USER}:{DB_PASS}@localhost:5432/test_api_db"
 )
 
 async_engine = create_async_engine(ASYNC_DB_URL, echo=True)
