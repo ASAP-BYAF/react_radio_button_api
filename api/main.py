@@ -9,10 +9,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 環境変数を .env から読み込む。
 dotenv_path = os.path.join(BASE_DIR, '.env')
-print(BASE_DIR)
 load_dotenv(dotenv_path)
 origin = os.environ.get("ALLOW_ORIGIN")
-print(origin)
 origin = origin.split(",")
 
 app = FastAPI()
