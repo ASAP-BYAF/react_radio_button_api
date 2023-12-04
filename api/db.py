@@ -1,12 +1,14 @@
 import os
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
-
 from dotenv import load_dotenv
-# 環境変数を .env から読み込む。
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
-load_dotenv(dotenv_path)
+from pathlib import Path
 
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# 環境変数を .env から読み込む。
+dotenv_path = os.path.join(BASE_DIR, '.env')
+load_dotenv(dotenv_path)
 DB_USER = os.environ.get("DB_USER", "root")
 DB_PASS = os.environ.get("DB_PASS", "")
 ASYNC_DB_URL = (
