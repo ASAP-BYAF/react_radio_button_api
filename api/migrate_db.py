@@ -1,13 +1,16 @@
 from dotenv import load_dotenv
 import os
 from sqlalchemy import create_engine
-
 from api.models.task import Base
 from api.models.file import Base
 from api.models.appering import Base
+from dotenv import load_dotenv
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # 環境変数を .env から読み込む。
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+dotenv_path = os.path.join(BASE_DIR, '.env')
 load_dotenv(dotenv_path)
 
 #(Rf): https://docs.sqlalchemy.org/en/14/dialects/postgresql.html#module-sqlalchemy.dialects.postgresql.asyncpg
