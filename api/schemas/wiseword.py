@@ -6,7 +6,7 @@ class WisewordBase(BaseModel):
 
 
 class WisewordCreate(WisewordBase):
-    pass
+    file_id: int
 
 
 class WisewordCreateResponse(WisewordCreate):

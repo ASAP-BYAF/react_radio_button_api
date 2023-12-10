@@ -25,32 +25,22 @@ async def wisewords(file_id, db: AsyncSession = Depends(get_db)):
     return await wiseword_crud.get_wisewords_by_file_id(int(file_id), db)
 
 
-@router.post("/appearing_detail_create",
-             response_model=wiseword_schema.WisewordCreateResponse)
-async def create_appearing(appearing_detail_body: wiseword_schema.WisewordCreate,
-                           db: AsyncSession = Depends(get_db)):
-    return await wiseword_crud.create_appearing_detail(db, appearing_detail_body)
+@router.post("/wiseword_create", response_model=wiseword_schema.WisewordCreateResponse)
+async def create_wiseword(wiseword_body: wiseword_schema.WisewordCreate, db: AsyncSession = Depends(get_db)):
+    return await wiseword_crud.create_wiseword(wiseword_body, db)
 
 
-@router.put("/update_appearing_detail/{appearing_detail_id}", response_model=wiseword_schema.WisewordCreateResponse)
-async def update_appearing_detail(
-        appearing_detail_id: int,
-        appearing_detail_body: wiseword_schema.WisewordBase,
-        db: AsyncSession = Depends(get_db)
-    ):
-    appearing_detail = await wiseword_crud \
-        .get_appearing_detail_by_id(
-            db,
-            appearing_detail_id=appearing_detail_id
-        )
-    if appearing_detail is None:
-        raise HTTPException(status_code=404, detail="appearing_detail not found")
-    return await wiseword_crud.update_appearing_detail(db, appearing_detail_body, original=appearing_detail)
+@router.put("/wiseword_update/{word_id}", response_model=wiseword_schema.WisewordCreateResponse)
+async def update_wiseword( word_id: int, wiseword_body: wiseword_schema.WisewordBase, db: AsyncSession = Depends(get_db) ):
+    wiseword = await wiseword_crud.get_wiseword( int(word_id), db )
+    if wiseword is None:
+        raise HTTPException(status_code=404, detail="wiseword not found")
+    return await wiseword_crud.update_wiseword(wiseword_body, original=wiseword, db=db)
 
 
-@router.delete("/appearing_detail_delete", response_model=None)
-async def delete_appearing_detail(appearing_detail_body: wiseword_schema.WisewordBase, db: AsyncSession = Depends(get_db)):
-    appearing_detail = await wiseword_crud.get_appearing_detail_by_name(db, appearing_detail_body.appearing_detail)
-    if appearing_detail is None:
-        raise HTTPException(status_code=404, detail="appearing_detail not found")
-    return await wiseword_crud.delete_appearing_detail(db, original=appearing_detail)
+@router.delete("/wiseword_delete/{word_id}", response_model=None)
+async def delete_wiseword(word_id, db: AsyncSession = Depends(get_db)):
+    wiseword = await wiseword_crud.get_wiseword(int(word_id), db)
+    if wiseword is None:
+        raise HTTPException(status_code=404, detail="wiseword not found")
+    return await wiseword_crud.delete_wiseword(original=wiseword, db=db)
