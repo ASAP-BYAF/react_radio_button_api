@@ -8,3 +8,5 @@ class Wiseword(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     phrase = Column(String, nullable=False, unique=True)
     file_id = Column(Integer, ForeignKey('file.id'))
+    task_id = Column(Integer, ForeignKey('tasks.id'))
+
