@@ -12,6 +12,7 @@ async def get_wisewords_all(db: AsyncSession) -> list[tuple[int, str]]:
             wiseword_model.Wiseword.phrase,
             wiseword_model.Wiseword.file_id,
             wiseword_model.Wiseword.id,
+            wiseword_model.Wiseword.task_id,
         )
     )
     return result.all()
@@ -30,7 +31,20 @@ async def get_wisewords_by_file_id(file_id: int, db: AsyncSession) -> list[tuple
             wiseword_model.Wiseword.phrase,
             wiseword_model.Wiseword.file_id,
             wiseword_model.Wiseword.id,
+            wiseword_model.Wiseword.task_id,
         ).filter(wiseword_model.Wiseword.file_id == file_id)
+    )
+    return result.all()
+
+
+async def get_wisewords_by_task_id(task_id: int, db: AsyncSession) -> list[tuple[int, str]]:
+    result: Result = await db.execute(
+        select(
+            wiseword_model.Wiseword.phrase,
+            wiseword_model.Wiseword.file_id,
+            wiseword_model.Wiseword.id,
+            wiseword_model.Wiseword.task_id,
+        ).filter(wiseword_model.Wiseword.task_id == task_id)
     )
     return result.all()
 
@@ -50,6 +64,7 @@ async def update_wiseword(
     db: AsyncSession
 ) -> wiseword_model.Wiseword:
     original.phrase = wiseword_create.phrase
+    original.task_id = wiseword_create.task_id
     db.add(original)
     await db.commit()
     await db.refresh(original)

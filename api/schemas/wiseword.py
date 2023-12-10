@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 class WisewordBase(BaseModel):
     phrase: str
+    task_id: int
 
 
 class WisewordCreate(WisewordBase):
