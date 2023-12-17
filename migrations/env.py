@@ -29,6 +29,7 @@ if config.config_file_name is not None:
 from api.models.appearing import Appearing, AppearingDetail
 from api.models.file import File
 from api.models.task import Task
+from api.models.wiseword import Wiseword
 from api.db import Base
 target_metadata = Base.metadata
 # target_metadata = None

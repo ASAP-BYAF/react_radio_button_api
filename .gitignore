@@ -3,3 +3,10 @@ __pycache__/
 /*log*
 /*swp*
 /*swo*
+
+# 作業用ファイル
+*.sh
+
+# DB データ移行
+test.dmp
+
