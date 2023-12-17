@@ -36,7 +36,7 @@ async def create_wiseword(wiseword_body: wiseword_schema.WisewordCreate, db: Asy
 
 
 @router.put("/wiseword_update/{word_id}", response_model=wiseword_schema.WisewordCreateResponse)
-async def update_wiseword( word_id: int, wiseword_body: wiseword_schema.WisewordBase, db: AsyncSession = Depends(get_db) ):
+async def update_wiseword( word_id: int, wiseword_body: wiseword_schema.WisewordCreate, db: AsyncSession = Depends(get_db) ):
     wiseword = await wiseword_crud.get_wiseword( int(word_id), db )
     if wiseword is None:
         raise HTTPException(status_code=404, detail="wiseword not found")

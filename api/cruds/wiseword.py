@@ -65,6 +65,7 @@ async def update_wiseword(
 ) -> wiseword_model.Wiseword:
     original.phrase = wiseword_create.phrase
     original.task_id = wiseword_create.task_id
+    original.file_id = wiseword_create.file_id
     db.add(original)
     await db.commit()
     await db.refresh(original)
