@@ -27,19 +27,8 @@ async def get_wisewords_all(db: AsyncSession) -> list[tuple[int, str]]:
 
 async def get_wiseword(wiseword_id: int, db: AsyncSession) -> tuple[int, str]:
     result: Result = await db.execute(
-        select(
-            Wiseword.id,
-            Wiseword.phrase,
-            Task.title,
-            File.vol_num,
-            File.file_num,
-        )
-        .select_from(
-            join(Wiseword, Task, Task.id == Wiseword.task_id)
-            .join(File, File.id == Wiseword.file_id)
-        )
-        .filter(Wiseword.id == wiseword_id)
-
+            select(Wiseword
+        ).filter(Wiseword.id == wiseword_id)    
     )
     return result.scalars().first()
 

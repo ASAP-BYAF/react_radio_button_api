@@ -12,7 +12,7 @@ async def wisewords(db: AsyncSession = Depends(get_db)):
     return await wiseword_crud.get_wisewords_all(db)
 
 
-@router.get("/wiseword/{word_id}", response_model=wiseword_schema.WisewordGetResponse)
+@router.get("/wiseword/{word_id}", response_model=wiseword_schema.WisewordCreateResponse)
 async def wiseword(word_id, db: AsyncSession = Depends(get_db)):
     wiseword = await wiseword_crud.get_wiseword(int(word_id), db)
     if wiseword is None:
