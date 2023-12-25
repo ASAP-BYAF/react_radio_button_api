@@ -15,3 +15,13 @@ class WisewordCreateResponse(WisewordCreate):
 
     class Config:
         orm_mode = True
+
+class WisewordGetResponse(BaseModel):
+    id: int
+    phrase: str
+    title: str
+    vol_num: int
+    file_num: int
+
+    class Config:
+        orm_mode = True

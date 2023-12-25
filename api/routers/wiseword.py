@@ -7,12 +7,12 @@ import api.cruds.wiseword as wiseword_crud
 router = APIRouter()
 
 
-@router.get("/wisewords_all", response_model=list[wiseword_schema.WisewordCreateResponse])
+@router.get("/wisewords_all", response_model=list[wiseword_schema.WisewordGetResponse])
 async def wisewords(db: AsyncSession = Depends(get_db)):
     return await wiseword_crud.get_wisewords_all(db)
 
 
-@router.get("/wiseword/{word_id}", response_model=wiseword_schema.WisewordCreateResponse)
+@router.get("/wiseword/{word_id}", response_model=wiseword_schema.WisewordGetResponse)
 async def wiseword(word_id, db: AsyncSession = Depends(get_db)):
     wiseword = await wiseword_crud.get_wiseword(int(word_id), db)
     if wiseword is None:
@@ -20,12 +20,12 @@ async def wiseword(word_id, db: AsyncSession = Depends(get_db)):
     return wiseword
 
 
-@router.get("/wisewords_by_file_id/{file_id}", response_model=list[wiseword_schema.WisewordCreateResponse])
+@router.get("/wisewords_by_file_id/{file_id}", response_model=list[wiseword_schema.WisewordGetResponse])
 async def wisewords(file_id, db: AsyncSession = Depends(get_db)):
     return await wiseword_crud.get_wisewords_by_file_id(int(file_id), db)
 
 
-@router.get("/wisewords_by_task_id/{task_id}", response_model=list[wiseword_schema.WisewordCreateResponse])
+@router.get("/wisewords_by_task_id/{task_id}", response_model=list[wiseword_schema.WisewordGetResponse])
 async def wisewords(task_id, db: AsyncSession = Depends(get_db)):
     return await wiseword_crud.get_wisewords_by_task_id(int(task_id), db)
 
