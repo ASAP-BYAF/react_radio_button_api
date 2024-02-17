@@ -22,6 +22,13 @@ router = APIRouter()
              response_model=appearing_schema.AppearingCreateResponse)
 async def create_appearing(appearing_body: appearing_schema.AppearingCreate,
                            db: AsyncSession = Depends(get_db)):
+    
+    # 既に登録されている場合は登録できない。
+    appearing = await appearing_crud.get_appearing(
+        db, file_id=appearing_body.file_id, task_id=appearing_body.task_id
+        )
+    if not appearing is None:
+        raise HTTPException(status_code=422, detail="Appearing already exist")
     return await appearing_crud.create_appearing(db, appearing_body)
 
 
