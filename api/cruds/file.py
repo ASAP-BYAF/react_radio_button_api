@@ -52,3 +52,15 @@ async def update_file(
     await db.commit()
     await db.refresh(original)
     return original
+
+
+async def get_previous_file_id(
+    db: AsyncSession
+) -> file_model.File:
+    result: Result = await db.execute(
+        select(
+            file_model.File.id
+            )
+            .order_by(file_model.File.vol_num, file_model.File.file_num)
+    )
+    return result.all()

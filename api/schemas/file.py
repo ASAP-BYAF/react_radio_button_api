@@ -19,3 +19,7 @@ class FileCreateResponse(FileCreate):
 
     class Config:
         orm_mode = True
+
+
+class FileId(BaseModel):
+    file_id: int
